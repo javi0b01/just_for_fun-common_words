@@ -1,12 +1,18 @@
 'use strict';
 const WORDS = [
-  { id: 1, day: 1, english: 'able', spanish: 'capaz', example: '' },
+  {
+    id: 1,
+    day: 1,
+    english: 'able',
+    spanish: 'capaz',
+    example: 'She is able to walk for hours.',
+  },
   {
     id: 2,
-    day: null,
+    day: 2,
     english: 'absolutely',
     spanish: 'absolutamente',
-    example: '',
+    example: 'It is absolutely necessary to eat healthy food.',
   },
   { id: 3, day: null, english: 'act', spanish: 'actuar', example: '' },
   {
@@ -44,13 +50,19 @@ const WORDS = [
   { id: 18, day: null, english: 'always', spanish: 'siempre', example: '' },
   { id: 19, day: null, english: 'amaze', spanish: 'asombrar', example: '' },
   { id: 20, day: null, english: 'animal', spanish: 'animal', example: '' },
-  { id: 21, day: 1, english: 'answer', spanish: 'respuesta', example: '' },
+  {
+    id: 21,
+    day: 1,
+    english: 'answer',
+    spanish: 'respuesta',
+    example: "The student doesn't know the answer.",
+  },
   {
     id: 22,
-    day: null,
+    day: 2,
     english: 'answer',
     spanish: 'responder/contestar (verb)',
-    example: '',
+    example: 'Can you answer the phone?',
   },
   { id: 23, day: null, english: 'anymore', spanish: 'nunca más', example: '' },
   {
@@ -118,8 +130,20 @@ const WORDS = [
   },
   { id: 39, day: null, english: 'ball', spanish: 'pelota', example: '' },
   { id: 40, day: null, english: 'band', spanish: 'banda', example: '' },
-  { id: 41, day: 1, english: 'bar', spanish: 'bar', example: '' },
-  { id: 42, day: null, english: 'bathroom', spanish: 'baño', example: '' },
+  {
+    id: 41,
+    day: 1,
+    english: 'bar',
+    spanish: 'bar',
+    example: 'The bar was really crowded.',
+  },
+  {
+    id: 42,
+    day: 2,
+    english: 'bathroom',
+    spanish: 'baño',
+    example: 'The house has three bathrooms.',
+  },
   { id: 43, day: null, english: 'be', spanish: 'ser/estar', example: '' },
   { id: 44, day: null, english: 'bear', spanish: 'soportar', example: '' },
   { id: 45, day: null, english: 'beat', spanish: 'golpear', example: '' },
@@ -150,8 +174,20 @@ const WORDS = [
   { id: 58, day: null, english: 'blow', spanish: 'soplar', example: '' },
   { id: 59, day: null, english: 'blue', spanish: 'azul', example: '' },
   { id: 60, day: null, english: 'boat', spanish: 'bote', example: '' },
-  { id: 61, day: 1, english: 'body', spanish: 'cuerpo', example: '' },
-  { id: 62, day: null, english: 'book', spanish: 'libro', example: '' },
+  {
+    id: 61,
+    day: 1,
+    english: 'body',
+    spanish: 'cuerpo',
+    example: 'How can we make our body healthy?',
+  },
+  {
+    id: 62,
+    day: 2,
+    english: 'book',
+    spanish: 'libro',
+    example: 'The library has a huge amount of books.',
+  },
   { id: 63, day: null, english: 'boss', spanish: 'jefe/jefa', example: '' },
   { id: 64, day: null, english: 'box', spanish: 'caja', example: '' },
   { id: 65, day: null, english: 'boy', spanish: 'niño', example: '' },
@@ -176,8 +212,20 @@ const WORDS = [
   { id: 78, day: null, english: 'buy', spanish: 'comprar', example: '' },
   { id: 79, day: null, english: 'cake', spanish: 'pastel/torta', example: '' },
   { id: 80, day: null, english: 'call', spanish: 'llamar (verb)', example: '' },
-  { id: 81, day: 1, english: 'call', spanish: 'llamada', example: '' },
-  { id: 82, day: null, english: 'can', spanish: 'poder', example: '' },
+  {
+    id: 81,
+    day: 1,
+    english: 'call',
+    spanish: 'llamada',
+    example: 'I took an urgent call.',
+  },
+  {
+    id: 82,
+    day: 2,
+    english: 'can',
+    spanish: 'poder',
+    example: 'They can play the guitar.',
+  },
   { id: 83, day: null, english: 'candy', spanish: 'caramelo', example: '' },
   {
     id: 84,
@@ -214,8 +262,20 @@ const WORDS = [
   { id: 98, day: null, english: 'choose', spanish: 'elegir', example: '' },
   { id: 99, day: null, english: 'city', spanish: 'ciudad', example: '' },
   { id: 100, day: null, english: 'class', spanish: 'clase', example: '' },
-  { id: 101, day: 1, english: 'clean', spanish: 'limpiar', example: '' },
-  { id: 102, day: null, english: 'clear', spanish: 'claro/clara', example: '' },
+  {
+    id: 101,
+    day: 1,
+    english: 'clean',
+    spanish: 'limpiar',
+    example: 'We must clean the house every day.',
+  },
+  {
+    id: 102,
+    day: 2,
+    english: 'clear',
+    spanish: 'claro/clara',
+    example: 'The instructions are clear.',
+  },
   {
     id: 103,
     day: null,
@@ -252,8 +312,20 @@ const WORDS = [
   { id: 118, day: null, english: 'course', spanish: 'curso', example: '' },
   { id: 119, day: null, english: 'cover', spanish: 'cubrir', example: '' },
   { id: 120, day: null, english: 'crazy', spanish: 'loco/loca', example: '' },
-  { id: 121, day: 1, english: 'cream', spanish: 'crema', example: '' },
-  { id: 122, day: null, english: 'cry', spanish: 'llorar', example: '' },
+  {
+    id: 121,
+    day: 1,
+    english: 'cream',
+    spanish: 'crema',
+    example: 'Beat the cream until it takes consistency.',
+  },
+  {
+    id: 122,
+    day: 2,
+    english: 'cry',
+    spanish: 'llorar',
+    example: 'Some little kids cry on the first day of school.',
+  },
   { id: 123, day: null, english: 'cut', spanish: 'cortar', example: '' },
   { id: 124, day: null, english: 'cute', spanish: 'lindo/linda', example: '' },
   { id: 125, day: null, english: 'dad', spanish: 'papá', example: '' },
@@ -307,9 +379,15 @@ const WORDS = [
     day: 1,
     english: 'doctor',
     spanish: 'doctor/doctora',
-    example: '',
+    example: 'My cousin is a doctor.',
   },
-  { id: 142, day: null, english: 'dog', spanish: 'perro', example: '' },
+  {
+    id: 142,
+    day: 2,
+    english: 'dog',
+    spanish: 'perro',
+    example: 'The dog is eating some meat.',
+  },
   { id: 143, day: null, english: 'dollar', spanish: 'dólar', example: '' },
   { id: 144, day: null, english: 'door', spanish: 'puerta', example: '' },
   { id: 145, day: null, english: 'down', spanish: 'abajo', example: '' },
@@ -338,10 +416,22 @@ const WORDS = [
     day: 1,
     english: 'end',
     spanish: 'finalizar/terminar',
+    example: "This can't be the end.",
+  },
+  {
+    id: 161,
+    day: null,
+    english: 'end',
+    spanish: 'final',
     example: '',
   },
-  { id: 161, day: null, english: 'end', spanish: 'final', example: '' },
-  { id: 162, day: null, english: 'enjoy', spanish: 'disfrutar', example: '' },
+  {
+    id: 162,
+    day: 2,
+    english: 'enjoy',
+    spanish: 'disfrutar',
+    example: 'She enjoys going out with friends.',
+  },
   {
     id: 163,
     day: null,
@@ -378,8 +468,20 @@ const WORDS = [
     spanish: 'rápido/rápida',
     example: '',
   },
-  { id: 181, day: 1, english: 'fat', spanish: 'gordo/gorda', example: '' },
-  { id: 182, day: null, english: 'father', spanish: 'padre', example: '' },
+  {
+    id: 181,
+    day: 1,
+    english: 'fat',
+    spanish: 'gordo/gorda',
+    example: 'My dog is getting a bit fat.',
+  },
+  {
+    id: 182,
+    day: 2,
+    english: 'father',
+    spanish: 'padre',
+    example: 'Her father is a good businessman.',
+  },
   { id: 183, day: null, english: 'fault', spanish: 'culpa', example: '' },
   { id: 184, day: null, english: 'favor', spanish: 'favor', example: '' },
   {
@@ -683,6 +785,10 @@ const WORDS = [
   { id: 327, day: null, english: 'man', spanish: 'hombre', example: '' },
   //{ id: , day: null, english: '', spanish: '', example: '' }
 ];
+
+export const getAllWords = () => {
+  return WORDS.filter((word) => word.day);
+};
 
 export const getDayWords = (day) => {
   return WORDS.filter((word) => word.day === day);
