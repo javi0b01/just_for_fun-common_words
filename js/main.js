@@ -6,7 +6,7 @@ const d = document;
 const $btnsDay = d.querySelectorAll('.btn-day'),
   $words = d.getElementById('words'),
   $exercises = d.getElementById('exercises'),
-  $messages = d.getElementById('messages');
+  $message = d.getElementById('message');
 
 d.addEventListener('DOMContentLoaded', () => {
   monitorEvents();
@@ -18,6 +18,16 @@ const monitorEvents = () => {
       showWords(+e.target.id);
     });
   });
+};
+
+const handleMessage = (type, message) => {
+  if (!type && !message) {
+    $message.className = '';
+    $message.textContent = null;
+  } else {
+    $message.classList.add('message', type);
+    $message.textContent = message;
+  }
 };
 
 const showWords = (id) => {
@@ -89,14 +99,14 @@ const showExercises = (id, words) => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.target));
     for (const key in formData) {
-      const value = formData[key];
-      if (!value) return ($messages.textContent = 'All fields are required.');
-      if (key != value) return ($messages.textContent = 'Failured.');
+      const value = formData[key].toLowerCase().trim();
+      if (!value) return handleMessage('warning', 'All fields are required.');
+      if (key != value) return handleMessage('warning', 'Failured.');
     }
-    $messages.textContent = 'Success!.';
+    handleMessage('success', 'Success!.');
   });
   $wordsForm.addEventListener('reset', (e) => {
-    $messages.textContent = null;
+    handleMessage();
   });
 };
 
@@ -105,10 +115,7 @@ const getExercisesHtml = (id, words) => {
   let fields = '';
   for (const word of words) {
     fields += `
-<div>
-  <label for="${word.id}">${word.spanish}</label>
-  <input id="${word.id}" type="text" placeholder="Type in English" name="${word.english}" autocomplete="off" />
-</div>
+<input type="text" placeholder='Type "${word.spanish}" in English' name="${word.english}" autocomplete="off" />
 `;
   }
   return `
@@ -116,9 +123,11 @@ const getExercisesHtml = (id, words) => {
 <h3>${h3}</h3>
 <form id="wordsForm">
 ${fields}
-<button type="submit">Check</button>
-<button type="reset">Reset</button>
-<button type="button" id="backBtn">Back</button>
+<div>
+  <button type="submit">Check</button>
+  <button type="reset">Reset</button>
+  <button type="button" id="backBtn">Back</button>
+</div>
 </form>
 `;
 };
