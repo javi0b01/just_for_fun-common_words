@@ -1,18 +1,28 @@
 'use strict';
-import { getAllWords, getDayWords } from './words.js';
+import { getNumberDays, getAllWords, getDayWords } from './words.js';
 
 const d = document;
 
-const $btnsDay = d.querySelectorAll('.btn-day'),
+const $buttonsDays = d.getElementById('buttonsDays'),
   $words = d.getElementById('words'),
   $exercises = d.getElementById('exercises'),
   $message = d.getElementById('message');
 
 d.addEventListener('DOMContentLoaded', () => {
-  monitorEvents();
+  setButtonsDays();
 });
 
-const monitorEvents = () => {
+const setButtonsDays = () => {
+  const numberDays = getNumberDays();
+  let buttonsHtml = '';
+  for (let i = 0; i <= numberDays; i++) {
+    buttonsHtml += `
+<button type="button" class="btn btn-day" id="${i}">
+  ${i === 0 ? 'All words' : `Words Day ${i}`}
+</button>`;
+  }
+  $buttonsDays.innerHTML = buttonsHtml;
+  const $btnsDay = d.querySelectorAll('.btn-day');
   $btnsDay.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       showWords(+e.target.id);
@@ -21,13 +31,11 @@ const monitorEvents = () => {
 };
 
 const handleMessage = (type, message) => {
-  if (!type && !message) {
-    $message.className = '';
-    $message.textContent = null;
-  } else {
+  $message.className = '';
+  if (type && message) {
     $message.classList.add('message', type);
     $message.textContent = message;
-  }
+  } else $message.textContent = null;
 };
 
 const showWords = (id) => {
@@ -45,12 +53,12 @@ const showWords = (id) => {
 };
 
 const getWordsHtml = (id, words) => {
-  const h3 = id === 0 ? 'All' : `Day ${id}`;
+  const h3 = id === 0 ? 'All Days' : `Day ${id}`;
   let tbody = '';
   for (const [i, word] of words.entries()) {
     tbody += `
 <tr>
-  <td>${i + 1}</td>
+  <td class="text-center">${i + 1}</td>
   <td>${word.english}</td>
   <td>${word.spanish}</td>
   <td>${word.example}</td>
@@ -59,9 +67,9 @@ const getWordsHtml = (id, words) => {
   }
   return `
 <h2>Words</h2>
-<div>
-  <h3>${h3}</h3>
+<div class="table-wrap">
   <table>
+    <caption>${h3}</caption>
     <thead>
       <tr>
         <th>#</th>
@@ -73,7 +81,7 @@ const getWordsHtml = (id, words) => {
     <tbody>${tbody}</tbody>
     <tfoot>
       <tr>
-        <td>
+        <td colspan="4" class="text-center">
           <button type="button" class="btn btn-exercise" id="btnExercises">
             Exercises
           </button>
@@ -93,6 +101,7 @@ const showExercises = (id, words) => {
   $backBtn.addEventListener('click', () => {
     $words.classList.toggle('d-none');
     $exercises.innerHTML = null;
+    handleMessage();
   });
   const $wordsForm = d.getElementById('wordsForm');
   $wordsForm.addEventListener('submit', (e) => {
