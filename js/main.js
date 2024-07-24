@@ -61,7 +61,15 @@ const getWordsHtml = (id, words) => {
   <td class="text-center">${i + 1}</td>
   <td>${word.english}</td>
   <td>${word.spanish}</td>
-  <td>${word.example}</td>
+  <td>
+  <p>${word.englishSample}</p>
+  <p>${word.spanishTranslation}</p>
+  ${
+    word.plus
+      ? `<div class="divide"></div><p>${word.plus[0]}</p><p>${word.plus[1]}</p>`
+      : ''
+  }
+  </td>
 </tr>
 `;
   }
@@ -75,7 +83,7 @@ const getWordsHtml = (id, words) => {
         <th>#</th>
         <th>English</th>
         <th>Spanish</th>
-        <th>Example</th>
+        <th>Examples</th>
       </tr>
     </thead>
     <tbody>${tbody}</tbody>

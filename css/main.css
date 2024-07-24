@@ -43,6 +43,9 @@ form {
 .d-none {
   display: none;
 }
+.divide {
+  border: 1px dashed blue;
+}
 .text-center {
   text-align: center;
 }
