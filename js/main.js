@@ -3,30 +3,28 @@ import { getNumberDays, getAllWords, getDayWords } from './words.js';
 
 const d = document;
 
-const $buttonsDays = d.getElementById('buttonsDays'),
+const $day = d.getElementById('day'),
+  $cards = d.getElementById('cards'),
   $words = d.getElementById('words'),
   $exercises = d.getElementById('exercises'),
   $message = d.getElementById('message');
 
 d.addEventListener('DOMContentLoaded', () => {
-  setButtonsDays();
+  setSelectDay();
 });
 
-const setButtonsDays = () => {
+const setSelectDay = () => {
   const numberDays = getNumberDays();
-  let buttonsHtml = '';
-  for (let i = 0; i <= numberDays; i++) {
-    buttonsHtml += `
-<button type="button" class="btn btn-day" id="${i}">
-  ${i === 0 ? 'All words' : `Words Day ${i}`}
-</button>`;
+  let optionsHtml = '<option value="" disabled selected>...</option>';
+  for (let i = 1; i <= numberDays; i++) {
+    optionsHtml += `
+    <option value="${i}">Words Day ${i}</option>
+`;
   }
-  $buttonsDays.innerHTML = buttonsHtml;
-  const $btnsDay = d.querySelectorAll('.btn-day');
-  $btnsDay.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      showWords(+e.target.id);
-    });
+  optionsHtml += '<option value="0">All Words</option>';
+  $day.innerHTML = optionsHtml;
+  $day.addEventListener('click', (e) => {
+    if (e.target.value != '') showWords(+e.target.value);
   });
 };
 
