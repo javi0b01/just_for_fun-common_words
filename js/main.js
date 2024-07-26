@@ -3,19 +3,21 @@ import { getNumberDays, getAllWords, getDayWords } from './words.js';
 
 const d = document;
 
-const $day = d.getElementById('day'),
-  $cards = d.getElementById('cards'),
+const $translate = d.getElementById('translate'),
+  $day = d.getElementById('day'),
   $words = d.getElementById('words'),
   $exercises = d.getElementById('exercises'),
   $message = d.getElementById('message');
 
 d.addEventListener('DOMContentLoaded', () => {
+  $translate.addEventListener('click', handleTranslate);
   setSelectDay();
 });
 
 const setSelectDay = () => {
   const numberDays = getNumberDays();
-  let optionsHtml = '<option value="" disabled selected>...</option>';
+  let optionsHtml =
+    '<option value="" disabled selected>Choose a day ... </option>';
   for (let i = 1; i <= numberDays; i++) {
     optionsHtml += `
     <option value="${i}">Words Day ${i}</option>
@@ -145,4 +147,58 @@ ${fields}
 </div>
 </form>
 `;
+};
+
+/*
+const showExercises = (id, words) => {
+  $words.classList.toggle('d-none');
+  const exercisesHtml = getExercisesHtml(id, words);
+  $exercises.innerHTML = exercisesHtml;
+  const $backBtn = d.getElementById('backBtn');
+  $backBtn.addEventListener('click', () => {
+    $words.classList.toggle('d-none');
+    $exercises.innerHTML = null;
+    handleMessage();
+  });
+  const $wordsForm = d.getElementById('wordsForm');
+  $wordsForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    for (const key in formData) {
+      const value = formData[key].toLowerCase().trim();
+      if (!value) return handleMessage('warning', 'All fields are required.');
+      if (key != value) return handleMessage('warning', 'Failured.');
+    }
+    handleMessage('success', 'Success!.');
+  });
+  $wordsForm.addEventListener('reset', (e) => {
+    handleMessage();
+  });
+};
+
+const getExercisesHtml = (id, words) => {
+  const h3 = id === 0 ? 'Type the words' : `Type the words of the day ${id}`;
+  let fields = '';
+  for (const word of words) {
+    fields += `
+<input type="text" placeholder='Type "${word.spanish}" in English' name="${word.english}" autocomplete="off" />
+`;
+  }
+  return `
+<h2>Exercises</h2>
+<h3>${h3}</h3>
+<form id="wordsForm">
+${fields}
+<div>
+  <button type="submit">Check</button>
+  <button type="reset">Reset</button>
+  <button type="button" id="backBtn">Back</button>
+</div>
+</form>
+`;
+};
+*/
+
+const handleTranslate = () => {
+  console.log('translate clicked!');
 };

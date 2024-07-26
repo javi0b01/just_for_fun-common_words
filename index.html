@@ -3,39 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/main.css" />
     <title>Common Words</title>
   </head>
   <body>
-    <header class="">
+    <header class="header">
       <div class="container">
         <h1>Common Words</h1>
-        <div>x</div>
+        <div>
+          <span class="material-symbols-outlined" id="translate">
+            translate
+          </span>
+        </div>
       </div>
     </header>
-    <main class="">
+    <main class="main">
       <div class="container">
         <section>
-          <label for="day">Choose a day:</label>
+          <p>Hi there! &#128075;</p>
+          <p>
+            The objetive is to learn and practice the 800 most common words in
+            English.
+          </p>
+          <p>
+            Easy, select a day, each day contains 10 words, they are accompanied
+            by examples and you will also find a small practice.
+          </p>
+        </section>
+        <section class="choose">
           <select name="day" id="day"></select>
         </section>
-        <section id="cards" class="cards"></section>
         <section id="words"></section>
         <section id="exercises"></section>
         <section id="message"></section>
       </div>
     </main>
-    <aside class="container">
-      <p>
-        This project is based on "Reto – 800 palabras en 100 días" proposed by
-        <a
-          href="https://youtu.be/SyRPXVFFeUc?si=lm_42lBey-4a2_1s"
-          target="_blank"
-          rel="noopener noreferrer"
-          >Inglés desde cero</a
-        >.
-      </p>
+    <aside class="aside">
+      <figure class="container">
+        <figcaption>
+          This project is based on "Reto – 800 palabras en 100 días" proposed by
+          <a
+            href="https://inglesdesdecero.ca/reto-800-palabras-en-100-dias/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Inglés desde cero</a
+          >.
+        </figcaption>
+        <iframe
+          width="320"
+          height="180"
+          src="https://www.youtube.com/embed/SyRPXVFFeUc?si=4o5pLLckwaUrV2Mo"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </figure>
     </aside>
     <footer class="dev">
       <p>
