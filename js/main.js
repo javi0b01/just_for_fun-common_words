@@ -3,8 +3,7 @@ import { getNumberDays, getAllWords, getDayWords } from './words.js';
 
 const d = document;
 
-const $translate = d.getElementById('translate'),
-  $day = d.getElementById('day'),
+const $day = d.getElementById('day'),
   $words = d.getElementById('words'),
   $practice = d.getElementById('practice'),
   $aside = d.getElementById('aside');
@@ -13,11 +12,8 @@ let rightWords = null,
   i = 0;
 
 d.addEventListener('DOMContentLoaded', () => {
-  $translate.addEventListener('click', handleTranslate);
   setSelectDay();
 });
-
-const handleTranslate = () => {};
 
 const setSelectDay = () => {
   const numberDays = getNumberDays();
@@ -25,8 +21,8 @@ const setSelectDay = () => {
     '<option value="" disabled selected>Choose a day ... </option>';
   for (let i = 1; i <= numberDays; i++) {
     optionsHtml += `
-    <option value="${i}">Words Day ${i}</option>
-`;
+      <option value="${i}">Words Day ${i}</option>
+    `;
   }
   optionsHtml += '<option value="0">All Words</option>';
   $day.innerHTML = optionsHtml;
@@ -54,71 +50,66 @@ const showWords = (id) => {
   });
 };
 
+const toCapitalize = (word) => {
+  const capitalize = word.charAt(0).toUpperCase();
+  return capitalize.concat(word.substring(1));
+};
+
 const getWordsHtml = (id, words) => {
-  const h3 = id === 0 ? 'All Days' : `Day ${id}`;
-  let tbody = '';
+  const title = id === 0 ? 'All Days' : `Day ${id}`;
+  let cards = '';
   for (const [i, word] of words.entries()) {
-    tbody += `
-<tr>
-  <td class="text-center">${i + 1}</td>
-  <td>${word.english}</td>
-  <td>${word.spanish}</td>
-  <td>
-  <p>${word.englishSample}</p>
-  <p>${word.spanishTranslation}</p>
+    cards += `
+<div class="card">
+  <p>Word ${i + 1}</p>
+  <p>${toCapitalize(word.english)} 🇺🇸 &nbsp;&nbsp; 🇨🇴 ${toCapitalize(
+      word.spanish
+    )}</p>
+  <ul>
+  <li>${word.englishSample}</li>
+  <li>${word.spanishTranslation}</li>
   ${
     word.plus
-      ? `<div class="divide"></div><p>${word.plus[0]}</p><p>${word.plus[1]}</p>`
+      ? `<div class="divide"></div><li>${word.plus[0]}</li><li>${word.plus[1]}</li>`
       : ''
   }
-  </td>
-</tr>
+  </ul>
+</div>
 `;
   }
   return `
-<h2>Words</h2>
-<div class="table-wrap">
-  <table>
-    <caption>${h3}</caption>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>English</th>
-        <th>Spanish</th>
-        <th>Examples</th>
-      </tr>
-    </thead>
-    <tbody>${tbody}</tbody>
-    <tfoot>
-      <tr>
-        <td colspan="4" class="text-center">
-          <button type="button" class="btn btn-practice" id="btnPractice">
-            Practice
-          </button>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+<h2>${title}</h2>
+<div class="cards">
+${cards}
 </div>
+<button type="button" class="btn-practice" id="btnPractice">
+  Practice
+</button>
   `;
 };
 
 const getPracticeHtml = (id, words) => {
   const h3 = id === 0 ? 'Type the words' : `Type the words of the day ${id}`;
   return `
-<button type="button" id="backBtn">Back</button>
-<h2>Practice</h2>
-<h3>${h3}</h3>
-<h4 id="count"></h4>
-<div id="card"></div>
+<div class="practice">
+  <button type="button" id="backBtn" class="btn-back">Back</button>
+  <h2>Practice</h2>
+  <h3>${h3}</h3>
+  <h4 id="count"></h4>
+  <div id="card"></div>
+</div>
   `;
 };
 
 const handleMessage = (type, message) => {
   const $message = d.getElementById('message');
   $message.className = '';
-  $message.classList.add('message', type);
-  $message.textContent = message;
+  if (type && message) {
+    $message.classList.add(type);
+    $message.textContent = message;
+  } else {
+    $message.textContent = '';
+  }
 };
 
 const getCardHtml = (word) => {
@@ -126,7 +117,7 @@ const getCardHtml = (word) => {
     <p>Type "${word.spanish}" in English</p>
     <form id="cardForm">
       <input type="text" autocomplete="off" name="${word.english}" id="input"/>
-      <button type="submit">Done!</button>
+      <button type="submit" class="btn-done">Done!</button>
     </form>
     <p id="message"></p>
   `;
@@ -136,21 +127,22 @@ const checkInput = (obj) => {
   const key = Object.keys(obj)[0];
   const value = obj[key].toLowerCase().trim();
   if (!value) {
-    handleMessage('warning', 'All fields are required.');
+    handleMessage('msg-warning', 'Type the word! 😩');
     return false;
   }
   if (key === value) {
-    handleMessage('success', 'Success!.');
     return true;
   } else {
-    handleMessage('warning', 'Failured.');
+    handleMessage('msg-warning', 'Try again! 😞');
     return false;
   }
 };
 
 const setCount = (words) => {
   const $count = d.getElementById('count');
-  $count.textContent = `${rightWords.length}/${words.length}`;
+  $count.textContent = `${rightWords.length}/${words.length} ${
+    rightWords.length === words.length ? '🚀' : '👀'
+  }`;
 };
 
 const setCard = (words, i) => {
@@ -169,10 +161,14 @@ const setCard = (words, i) => {
       if (rightWords.length === words.length) {
         setCount(words);
         $card.innerHTML = '<p id="message"></p>';
-        handleMessage('success', 'Done!');
+        handleMessage('msg-success', 'Good job! 🥳');
       } else {
-        i++;
-        setCard(words, i);
+        handleMessage('msg-success', '👌🏽');
+        setTimeout(() => {
+          handleMessage();
+          i++;
+          setCard(words, i);
+        }, 1000);
       }
     }
   });
