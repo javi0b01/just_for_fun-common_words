@@ -6,13 +6,18 @@ const d = document;
 const $translate = d.getElementById('translate'),
   $day = d.getElementById('day'),
   $words = d.getElementById('words'),
-  $exercises = d.getElementById('exercises'),
-  $message = d.getElementById('message');
+  $practice = d.getElementById('practice'),
+  $aside = d.getElementById('aside');
+
+let rightWords = null,
+  i = 0;
 
 d.addEventListener('DOMContentLoaded', () => {
   $translate.addEventListener('click', handleTranslate);
   setSelectDay();
 });
+
+const handleTranslate = () => {};
 
 const setSelectDay = () => {
   const numberDays = getNumberDays();
@@ -26,29 +31,26 @@ const setSelectDay = () => {
   optionsHtml += '<option value="0">All Words</option>';
   $day.innerHTML = optionsHtml;
   $day.addEventListener('click', (e) => {
-    if (e.target.value != '') showWords(+e.target.value);
+    if (e.target.value != '') {
+      $aside.classList.add('d-none');
+      showWords(+e.target.value);
+    } else {
+      $aside.classList.remove('d-none');
+    }
   });
-};
-
-const handleMessage = (type, message) => {
-  $message.className = '';
-  if (type && message) {
-    $message.classList.add('message', type);
-    $message.textContent = message;
-  } else $message.textContent = null;
 };
 
 const showWords = (id) => {
   if ($words.classList.contains('d-none')) {
     $words.classList.toggle('d-none');
-    $exercises.innerHTML = null;
+    $practice.innerHTML = null;
   }
   const words = id === 0 ? getAllWords() : getDayWords(id);
   const wordsHtml = getWordsHtml(id, words);
   $words.innerHTML = wordsHtml;
-  const $btnExercises = d.getElementById('btnExercises');
-  $btnExercises.addEventListener('click', () => {
-    showExercises(id, words);
+  const $btnPractice = d.getElementById('btnPractice');
+  $btnPractice.addEventListener('click', () => {
+    startPractice(id, words);
   });
 };
 
@@ -90,8 +92,8 @@ const getWordsHtml = (id, words) => {
     <tfoot>
       <tr>
         <td colspan="4" class="text-center">
-          <button type="button" class="btn btn-exercise" id="btnExercises">
-            Exercises
+          <button type="button" class="btn btn-practice" id="btnPractice">
+            Practice
           </button>
         </td>
       </tr>
@@ -101,104 +103,91 @@ const getWordsHtml = (id, words) => {
   `;
 };
 
-const showExercises = (id, words) => {
+const getPracticeHtml = (id, words) => {
+  const h3 = id === 0 ? 'Type the words' : `Type the words of the day ${id}`;
+  return `
+<button type="button" id="backBtn">Back</button>
+<h2>Practice</h2>
+<h3>${h3}</h3>
+<h4 id="count"></h4>
+<div id="card"></div>
+  `;
+};
+
+const handleMessage = (type, message) => {
+  const $message = d.getElementById('message');
+  $message.className = '';
+  $message.classList.add('message', type);
+  $message.textContent = message;
+};
+
+const getCardHtml = (word) => {
+  return `
+    <p>Type "${word.spanish}" in English</p>
+    <form id="cardForm">
+      <input type="text" autocomplete="off" name="${word.english}" id="input"/>
+      <button type="submit">Done!</button>
+    </form>
+    <p id="message"></p>
+  `;
+};
+
+const checkInput = (obj) => {
+  const key = Object.keys(obj)[0];
+  const value = obj[key].toLowerCase().trim();
+  if (!value) {
+    handleMessage('warning', 'All fields are required.');
+    return false;
+  }
+  if (key === value) {
+    handleMessage('success', 'Success!.');
+    return true;
+  } else {
+    handleMessage('warning', 'Failured.');
+    return false;
+  }
+};
+
+const setCount = (words) => {
+  const $count = d.getElementById('count');
+  $count.textContent = `${rightWords.length}/${words.length}`;
+};
+
+const setCard = (words, i) => {
+  setCount(words);
+  const $card = d.getElementById('card');
+  $card.innerHTML = getCardHtml(words[i]);
+  const $cardForm = d.getElementById('cardForm');
+  const $input = d.getElementById('input');
+  $input.focus();
+  $cardForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    const isRight = await checkInput(formData);
+    if (isRight) {
+      rightWords.push(true);
+      if (rightWords.length === words.length) {
+        setCount(words);
+        $card.innerHTML = '<p id="message"></p>';
+        handleMessage('success', 'Done!');
+      } else {
+        i++;
+        setCard(words, i);
+      }
+    }
+  });
+};
+
+const startPractice = (id, words) => {
+  rightWords = [];
+  i = 0;
   $words.classList.toggle('d-none');
-  const exercisesHtml = getExercisesHtml(id, words);
-  $exercises.innerHTML = exercisesHtml;
+  const practiceHtml = getPracticeHtml(id, words);
+  $practice.innerHTML = practiceHtml;
   const $backBtn = d.getElementById('backBtn');
   $backBtn.addEventListener('click', () => {
     $words.classList.toggle('d-none');
-    $exercises.innerHTML = null;
-    handleMessage();
+    $practice.innerHTML = null;
   });
-  const $wordsForm = d.getElementById('wordsForm');
-  $wordsForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = Object.fromEntries(new FormData(e.target));
-    for (const key in formData) {
-      const value = formData[key].toLowerCase().trim();
-      if (!value) return handleMessage('warning', 'All fields are required.');
-      if (key != value) return handleMessage('warning', 'Failured.');
-    }
-    handleMessage('success', 'Success!.');
-  });
-  $wordsForm.addEventListener('reset', (e) => {
-    handleMessage();
-  });
-};
-
-const getExercisesHtml = (id, words) => {
-  const h3 = id === 0 ? 'Type the words' : `Type the words of the day ${id}`;
-  let fields = '';
-  for (const word of words) {
-    fields += `
-<input type="text" placeholder='Type "${word.spanish}" in English' name="${word.english}" autocomplete="off" />
-`;
-  }
-  return `
-<h2>Exercises</h2>
-<h3>${h3}</h3>
-<form id="wordsForm">
-${fields}
-<div>
-  <button type="submit">Check</button>
-  <button type="reset">Reset</button>
-  <button type="button" id="backBtn">Back</button>
-</div>
-</form>
-`;
-};
-
-/*
-const showExercises = (id, words) => {
-  $words.classList.toggle('d-none');
-  const exercisesHtml = getExercisesHtml(id, words);
-  $exercises.innerHTML = exercisesHtml;
-  const $backBtn = d.getElementById('backBtn');
-  $backBtn.addEventListener('click', () => {
-    $words.classList.toggle('d-none');
-    $exercises.innerHTML = null;
-    handleMessage();
-  });
-  const $wordsForm = d.getElementById('wordsForm');
-  $wordsForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = Object.fromEntries(new FormData(e.target));
-    for (const key in formData) {
-      const value = formData[key].toLowerCase().trim();
-      if (!value) return handleMessage('warning', 'All fields are required.');
-      if (key != value) return handleMessage('warning', 'Failured.');
-    }
-    handleMessage('success', 'Success!.');
-  });
-  $wordsForm.addEventListener('reset', (e) => {
-    handleMessage();
-  });
-};
-
-const getExercisesHtml = (id, words) => {
-  const h3 = id === 0 ? 'Type the words' : `Type the words of the day ${id}`;
-  let fields = '';
-  for (const word of words) {
-    fields += `
-<input type="text" placeholder='Type "${word.spanish}" in English' name="${word.english}" autocomplete="off" />
-`;
-  }
-  return `
-<h2>Exercises</h2>
-<h3>${h3}</h3>
-<form id="wordsForm">
-${fields}
-<div>
-  <button type="submit">Check</button>
-  <button type="reset">Reset</button>
-  <button type="button" id="backBtn">Back</button>
-</div>
-</form>
-`;
-};
-*/
-
-const handleTranslate = () => {
-  console.log('translate clicked!');
+  setCard(words, i);
 };
