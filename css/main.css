@@ -16,12 +16,13 @@
   box-sizing: border-box;
 }
 html {
+  height: 100%;
   font-size: 62.5%;
 }
 body {
+  height: 100%;
   background-color: var(--c-white);
   color: var(--c-black);
-  min-height: 100vh;
   margin: 0;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
@@ -75,7 +76,7 @@ button {
   border: none;
   background-color: var(--c-black);
   padding: 1rem 3rem;
-  margin: 1rem auto;
+  margin: 3rem auto;
   font-size: 1.5em;
   border-radius: 0.5rem;
 }
@@ -143,6 +144,7 @@ footer img {
 }
 .choose {
   text-align: center;
+  margin: 2rem 0;
 }
 .choose select {
   font-size: 2rem;
@@ -182,14 +184,15 @@ footer img {
   margin: 4rem 0;
 }
 .practice #card {
+  width: 100%;
+  max-width: 40rem;
+  height: 40rem;
   background-color: var(--c-black);
   color: var(--c-white);
-  width: 30rem;
-  height: 30rem;
   margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border: 1px solid var(--c-highlight-purple);
   border-radius: 1rem;
@@ -199,7 +202,6 @@ footer img {
   font-size: 1.3em;
 }
 .practice form input {
-  margin: 2rem;
   padding: 1rem;
   border: none;
   border-radius: 0.5rem;
@@ -223,30 +225,61 @@ footer img {
     padding-left: 0;
     padding-right: 0;
   }
+  .choose {
+    margin: 4rem 0;
+  }
 }
 @media only screen and (min-width: 768px) {
   body {
     font-size: 1.8em;
+    grid-template-rows: auto 1fr 2fr auto;
   }
   .container {
     max-width: 720px;
+  }
+  .cards {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .card {
+    width: 35rem;
   }
 }
 @media only screen and (min-width: 992px) {
   body {
     font-size: 2em;
+    grid-template-rows: auto 1fr 1fr auto;
+  }
+  aside {
+    text-align: center;
   }
   .container {
     max-width: 960px;
+  }
+  .cards {
+    justify-content: space-evenly;
+  }
+  .card {
+    width: 45rem;
   }
 }
 @media only screen and (min-width: 1200px) {
   .container {
     max-width: 1140px;
   }
+  .cards {
+    justify-content: space-between;
+  }
+  .card {
+    width: 35rem;
+  }
 }
 @media only screen and (min-width: 1400px) {
   .container {
     max-width: 1320px;
+  }
+  .cards {
+    justify-content: space-evenly;
   }
 }
