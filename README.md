@@ -5,7 +5,6 @@ How does it look? Take a look at [Common Words](https://javierandres-dev.github.
 - HTML
 - CSS
 - JavaScript
----
 ## Software Developer
 Built by [javi](https://github.com/javierandres-dev/) :copyright: 2024  
 Found a bug or have an idea? [Contact me](https://www.linkedin.com/in/javierandres-dev/).
