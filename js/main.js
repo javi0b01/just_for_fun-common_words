@@ -84,8 +84,12 @@ const getWordsHtml = (id, words) => {
 };
 
 const toCapitalize = (word) => {
-  const capitalize = word.charAt(0).toUpperCase();
-  return capitalize.concat(word.substring(1));
+  const arr = word.split('/');
+  const words = arr.map((w) => {
+    const capitalize = w.charAt(0).toUpperCase();
+    return capitalize.concat(w.substring(1));
+  });
+  return words.join('/');
 };
 
 const startPractice = (id, words) => {
