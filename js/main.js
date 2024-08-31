@@ -9,7 +9,8 @@ const $day = d.getElementById('day'),
   $aside = d.getElementById('aside');
 
 let rightWords = null,
-  i = 0;
+  i = 0,
+  attemptCounter = 0;
 
 d.addEventListener('DOMContentLoaded', () => {
   setSelectDay();
@@ -132,6 +133,7 @@ const setCard = (words, i) => {
     const isRight = checkInput(formData);
     if (isRight) {
       rightWords.push(true);
+      attemptCounter = 0;
       if (rightWords.length === words.length) {
         setCount(words);
         $card.innerHTML = '<p id="message"></p>';
@@ -145,6 +147,10 @@ const setCard = (words, i) => {
           setCard(words, i);
         }, 1000);
       }
+    } else {
+      $input.value = '';
+      $input.focus();
+      if (attemptCounter > 2) $input.placeholder = `Type: ${words[i].english}`;
     }
   });
 };
@@ -173,11 +179,13 @@ const checkInput = (obj) => {
     value = obj[key].toLowerCase().trim();
   if (!value) {
     handleMessage('msg-warning', 'Type the word! 😩');
+    attemptCounter++;
     return false;
   }
   if (key === value) return true;
   else {
     handleMessage('msg-warning', 'Try again! 😞');
+    attemptCounter++;
     return false;
   }
 };
