@@ -35,6 +35,15 @@ const setSelectDay = () => {
   });
 };
 
+const getUnorderedWords = (words) => {
+  const arr = [];
+  while (arr.length < words.length) {
+    const idx = Math.floor(Math.random() * words.length);
+    if (!arr.includes(words[idx])) arr.push(words[idx]);
+  }
+  return arr;
+};
+
 const showWords = (id) => {
   if ($words.classList.contains('d-none')) {
     $words.classList.toggle('d-none');
@@ -45,7 +54,8 @@ const showWords = (id) => {
   $words.innerHTML = wordsHtml;
   const $btnPractice = d.getElementById('btnPractice');
   $btnPractice.addEventListener('click', () => {
-    startPractice(id, words);
+    const unorderedWords = getUnorderedWords(words);
+    startPractice(id, unorderedWords);
   });
 };
 
@@ -145,12 +155,12 @@ const setCard = (words, i) => {
           handleMessage();
           i++;
           setCard(words, i);
-        }, 1000);
+        }, 500);
       }
     } else {
       $input.value = '';
       $input.focus();
-      if (attemptCounter > 2) $input.placeholder = `Type: ${words[i].english}`;
+      if (attemptCounter > 1) $input.placeholder = `Type: ${words[i].english}`;
     }
   });
 };
