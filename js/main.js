@@ -160,6 +160,11 @@ const setCard = (words, i) => {
     } else {
       $input.value = '';
       $input.focus();
+      if (attemptCounter === 1) {
+        const $sample = d.getElementById('sample');
+        $sample.textContent = `${words[i].englishSample}`;
+        $input.placeholder = '🙄 See sample ☝️';
+      }
       if (attemptCounter > 1) $input.placeholder = `Type: ${words[i].english}`;
     }
   });
@@ -176,6 +181,7 @@ const getCardHtml = (word) => {
   return `
     <p>Type in English</p>
     <p>"${word.spanish}"</p>
+    <div id="sample" class="sample"></div>
     <form id="cardForm">
       <input type="text" autocomplete="off" name="${word.english}" id="input"/>
       <button type="submit" class="btn-done">Done!</button>

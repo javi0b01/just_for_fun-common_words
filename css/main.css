@@ -221,6 +221,12 @@ footer img {
 .msg-warning {
   color: var(--c-highlight-yellow);
 }
+#sample {
+  font-size: 1em;
+  font-style: italic;
+  opacity: 0.75;
+  margin-bottom: 0.5rem;
+}
 @media only screen and (min-width: 576px) {
   body {
     font-size: 1.7em;
@@ -268,6 +274,9 @@ footer img {
   }
   .card {
     width: 45rem;
+  }
+  .practice #card {
+    height: 45rem;
   }
 }
 @media only screen and (min-width: 1200px) {
