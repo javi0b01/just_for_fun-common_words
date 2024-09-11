@@ -190,9 +190,9 @@ footer img {
   margin: 4rem 0;
 }
 .practice #card {
+  max-width: 45rem;
   width: 100%;
-  max-width: 40rem;
-  height: 40rem;
+  height: 45rem;
   background-color: var(--c-black);
   color: var(--c-white);
   margin: auto;
@@ -224,8 +224,8 @@ footer img {
 #sample {
   font-size: 1em;
   font-style: italic;
-  opacity: 0.75;
-  margin-bottom: 0.5rem;
+  opacity: 0.5;
+  margin-bottom: 1rem;
 }
 @media only screen and (min-width: 576px) {
   body {
@@ -274,9 +274,6 @@ footer img {
   }
   .card {
     width: 45rem;
-  }
-  .practice #card {
-    height: 45rem;
   }
 }
 @media only screen and (min-width: 1200px) {

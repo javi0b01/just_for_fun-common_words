@@ -163,7 +163,7 @@ const setCard = (words, i) => {
       if (attemptCounter === 1) {
         const $sample = d.getElementById('sample');
         $sample.textContent = `${words[i].englishSample}`;
-        $input.placeholder = '🙄 See sample ☝️';
+        $input.placeholder = 'See sample';
       }
       if (attemptCounter > 1) $input.placeholder = `Type: ${words[i].english}`;
     }
